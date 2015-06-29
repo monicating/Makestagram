@@ -9,27 +9,26 @@
 import UIKit
 
 class TimelineViewController: UIViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        // set TimelineViewController to tabBarController's delegate
+        self.tabBarController?.delegate = self
     }
     
+}
 
-    /*
-    // MARK: - Navigation
+// MARK: Tab Bar Delegate
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+extension TimelineViewController: UITabBarControllerDelegate {
+    
+    func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool {
+        if (viewController is PhotoViewController) {
+            println("Take Photo")
+            return false
+        } else {
+            return true
+        }
     }
-    */
-
+    
 }
