@@ -2,18 +2,18 @@
 //  PhotoTakingHelper.swift
 //  Makestagram
 //
-//  Created by Monica on 6/29/15.
+//  Created by Monica on 6/30/15.
 //  Copyright (c) 2015 Make School. All rights reserved.
 //
 
 import UIKit
 
-// callback of PhotoTakingHelper must have this signature
+// typealias provides function signature with name - signature of PhotoTakingHelper's callback
 typealias PhotoTakingHelperCallback = UIImage? -> Void
 
-class PhotoTakingHelper: NSObject {
+class PhotoTakingHelper : NSObject {
     
-    /** View controller on which AlertViewController and UIImagePicker are presented */
+    /** View controller on which AlertViewController and UIImagePickerController are presented */
     weak var viewController: UIViewController!
     var callback: PhotoTakingHelperCallback
     var imagePickerController: UIImagePickerController?
@@ -28,31 +28,54 @@ class PhotoTakingHelper: NSObject {
     }
     
     func showPhotoSourceSelection() {
-        // Allow user to choose between photo library and camera - Actionsheet displays popup at bottom of screen
+        // Allow user to choose between photo library and camera; .ActionSheet popup displayed at bottom of screen
         let alertController = UIAlertController(title: nil, message: "Where do you want to get your picture from?", preferredStyle: .ActionSheet)
         
-        // Add 3 UIAlertActions to Alert Controller
+        // 3 UIAlertActions - 3 button on popup
+        
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
         alertController.addAction(cancelAction)
         
         // Only show camera option if rear camera is available
         if (UIImagePickerController.isCameraDeviceAvailable(.Rear)) {
             let cameraAction = UIAlertAction(title: "Photo from Camera", style: .Default) { (action) in
-                // do nothing yet...
+                self.showImagePickerController(.Camera)
             }
             
             alertController.addAction(cameraAction)
         }
         
-        // Allow user to pick image from library
         let photoLibraryAction = UIAlertAction(title: "Photo from Library", style: .Default) { (action) in
-            // do nothing yet...
+            self.showImagePickerController(.PhotoLibrary)
         }
         
         alertController.addAction(photoLibraryAction)
         
         viewController.presentViewController(alertController, animated: true, completion: nil)
-        
     }
-   
+    
+    func showImagePickerController(sourceType: UIImagePickerControllerSourceType) {
+        imagePickerController = UIImagePickerController()
+        // sourceType is specified - camera or photo library
+        imagePickerController!.sourceType = sourceType
+        // extend to set up delegate property of imagePickerController
+        imagePickerController!.delegate = self
+        
+        self.viewController.presentViewController(imagePickerController!, animated: true, completion: nil)
+    }
+    
+}
+
+extension PhotoTakingHelper: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    // implement 2 different delegate methods
+    
+    // image is selected
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
+        callback(image)
+    }
+    
+    // cancel button tapped - hide Image Picker Controller
+    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        viewController.dismissViewControllerAnimated(true, completion: nil)
+    }
 }
