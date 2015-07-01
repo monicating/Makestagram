@@ -39,15 +39,10 @@ extension TimelineViewController: UITabBarControllerDelegate {
         photoTakingHelper = PhotoTakingHelper(viewController: self.tabBarController!) { (image: UIImage?) in
             // code for closure - function without a name
             // println("received a callback")
-            
-            // turn UIImage into NSData instance
-            let imageData = UIImageJPEGRepresentation(image, 0.8)
-            let imageFile = PFFile(data: imageData)
-            imageFile.save()
-            
-            let post = PFObject(className: "Post")
-            post["imageFile"] = imageFile
-            post.save()
+
+            let post = Post()
+            post.image = image
+            post.uploadPost()
         }
         
         /* alternative way of writing without trailing closure

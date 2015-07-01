@@ -2,7 +2,7 @@
 //  PhotoTakingHelper.swift
 //  Makestagram
 //
-//  Created by Monica on 6/30/15.
+//  Created by Monica on 7/1/15.
 //  Copyright (c) 2015 Make School. All rights reserved.
 //
 
@@ -31,7 +31,7 @@ class PhotoTakingHelper : NSObject {
         // Allow user to choose between photo library and camera; .ActionSheet popup displayed at bottom of screen
         let alertController = UIAlertController(title: nil, message: "Where do you want to get your picture from?", preferredStyle: .ActionSheet)
         
-        // 3 UIAlertActions - 3 button on popup
+        // 3 UIAlertActions - 3 buttons on popup
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
         alertController.addAction(cancelAction)
@@ -72,6 +72,7 @@ extension PhotoTakingHelper: UIImagePickerControllerDelegate, UINavigationContro
     // image is selected
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
         callback(image)
+        viewController.dismissViewControllerAnimated(true, completion: nil)
     }
     
     // cancel button tapped - hide Image Picker Controller
