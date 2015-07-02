@@ -48,6 +48,7 @@
 		DD09807E1B41C22F009DE96B /* FriendSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD09807D1B41C22F009DE96B /* FriendSearchViewController.swift */; };
 		DD0980961B44651A009DE96B /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0980951B44651A009DE96B /* Post.swift */; };
 		DD0980991B446738009DE96B /* PhotoTakingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0980981B446738009DE96B /* PhotoTakingHelper.swift */; };
+		DD0980A01B458A00009DE96B /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD09809F1B458A00009DE96B /* PostTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -191,6 +192,7 @@
 		DD09807D1B41C22F009DE96B /* FriendSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendSearchViewController.swift; sourceTree = "<group>"; };
 		DD0980951B44651A009DE96B /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		DD0980981B446738009DE96B /* PhotoTakingHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoTakingHelper.swift; sourceTree = "<group>"; };
+		DD09809F1B458A00009DE96B /* PostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -343,6 +345,7 @@
 		62C8C1E21B06BD6500DC3EA7 /* Makestagram */ = {
 			isa = PBXGroup;
 			children = (
+				DD09809B1B4586E3009DE96B /* Views */,
 				DD0980971B446671009DE96B /* PhotoTaking */,
 				DD0980941B446505009DE96B /* Models */,
 				6277189C1B0A58E800AF5C6E /* Helpers */,
@@ -396,6 +399,22 @@
 				DD0980981B446738009DE96B /* PhotoTakingHelper.swift */,
 			);
 			path = PhotoTaking;
+			sourceTree = "<group>";
+		};
+		DD09809B1B4586E3009DE96B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				DD09809C1B4586E3009DE96B /* Timeline */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		DD09809C1B4586E3009DE96B /* Timeline */ = {
+			isa = PBXGroup;
+			children = (
+				DD09809F1B458A00009DE96B /* PostTableViewCell.swift */,
+			);
+			path = Timeline;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -587,6 +606,7 @@
 				DD09807C1B41C21A009DE96B /* PhotoViewController.swift in Sources */,
 				62C8C1E61B06BD6500DC3EA7 /* AppDelegate.swift in Sources */,
 				627718971B0A581700AF5C6E /* FilterViewController.swift in Sources */,
+				DD0980A01B458A00009DE96B /* PostTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

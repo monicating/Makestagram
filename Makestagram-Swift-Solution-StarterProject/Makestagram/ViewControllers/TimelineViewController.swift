@@ -11,9 +11,9 @@ import Parse
 
 class TimelineViewController: UIViewController {
     
-    var posts: [Post] = []
-
     @IBOutlet weak var tableView: UITableView!
+    
+    var posts: [Post] = []
     var photoTakingHelper: PhotoTakingHelper?
 
     override func viewDidLoad() {
@@ -48,11 +48,17 @@ class TimelineViewController: UIViewController {
         query.findObjectsInBackgroundWithBlock {(result: [AnyObject]?, error: NSError?) -> Void in
             // 8 - store posts in array of type [Post]
             self.posts = result as? [Post] ?? []
+            
+            // loop through posts from timeline query
+            for post in self.posts {
+                let data = post.imageFile?.getData()            // download image file
+                post.image = UIImage(data: data!, scale:1.0)    // turn into UIImage instance and store in image property of post
+            }
+            
             // 9 - refresh tableView
             self.tableView.reloadData()
         }
     }
-    
 }
 
 // MARK: Tab Bar Delegate
@@ -96,8 +102,11 @@ extension TimelineViewController: UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("PostCell") as! UITableViewCell
-        cell.textLabel!.text = "Post"
+        // let cell = tableView.dequeueReusableCellWithIdentifier("PostCell") as! UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("PostCell") as! PostTableViewCell
+
+        // cell.textLabel!.text = "Post"
+        cell.postImageView.image = posts[indexPath.row].image
         return cell
     }
 }
