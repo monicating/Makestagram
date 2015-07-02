@@ -10,6 +10,8 @@ import UIKit
 import Parse
 
 class TimelineViewController: UIViewController {
+    
+    var posts: [Post] = []
 
     @IBOutlet weak var tableView: UITableView!
     var photoTakingHelper: PhotoTakingHelper?
@@ -23,30 +25,30 @@ class TimelineViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        // 1
+        // 1 - create query for people the current user follows
         let followingQuery = PFQuery(className: "Follow")
         followingQuery.whereKey("fromUser", equalTo:PFUser.currentUser()!)
         
-        // 2
+        // 2 - create query for posts created by people current user follows
         let postsFromFollowedUsers = Post.query()
         postsFromFollowedUsers!.whereKey("user", matchesKey: "toUser", inQuery: followingQuery)
         
-        // 3
+        // 3 - create query for posts current user created
         let postsFromThisUser = Post.query()
         postsFromThisUser!.whereKey("user", equalTo: PFUser.currentUser()!)
         
-        // 4
+        // 4 - combined query of 2 and 3
         let query = PFQuery.orQueryWithSubqueries([postsFromFollowedUsers!, postsFromThisUser!])
-        // 5
+        // 5 - combined query includes user associated with post
         query.includeKey("user")
-        // 6
+        // 6 - results displayed in chronological order
         query.orderByDescending("createdAt")
         
-        // 7
+        // 7 - kick off network request
         query.findObjectsInBackgroundWithBlock {(result: [AnyObject]?, error: NSError?) -> Void in
-            // 8
+            // 8 - store posts in array of type [Post]
             self.posts = result as? [Post] ?? []
-            // 9
+            // 9 - refresh tableView
             self.tableView.reloadData()
         }
     }
@@ -85,4 +87,17 @@ extension TimelineViewController: UITabBarControllerDelegate {
 
     }
     
+}
+
+extension TimelineViewController: UITableViewDataSource {
+
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return posts.count         // # of rows = # of posts
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("PostCell") as! UITableViewCell
+        cell.textLabel!.text = "Post"
+        return cell
+    }
 }

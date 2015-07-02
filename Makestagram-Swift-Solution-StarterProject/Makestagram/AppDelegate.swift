@@ -31,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     let acl = PFACL()               // access control lists
     acl.setPublicReadAccess(true)   // all users can read
-    PFACL.setDefaultACL(acl, withAccessForCurrentUser: true) // only users who created the object can write
+    PFACL.setDefaultACL(acl, withAccessForCurrentUser: true)
     
     return true
   }
